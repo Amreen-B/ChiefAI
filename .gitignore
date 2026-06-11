@@ -34,3 +34,13 @@ __pycache__/
 .env
 *.db
 *.pdf
+
+# Python
+__pycache__/
+*.pyc
+
+# Uploads
+backend/uploads/
+
+# PDFs
+*.pdf
