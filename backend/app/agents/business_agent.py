@@ -6,16 +6,21 @@ class BusinessAgent:
     def run(self, startup_text):
 
         prompt = f"""
-        Analyze this startup.
+        You are a startup strategy consultant.
 
         Return ONLY valid JSON.
 
         {{
-            "business_model": "",
-            "target_customer": "",
-            "go_to_market": "",
-            "revenue_streams": [],
-            "key_advantages": []
+        "business_model": "",
+        "target_customer": "",
+        "go_to_market": "",
+        "revenue_streams": [],
+        "key_advantages": [],
+        "customer_segments": [],
+        "acquisition_channels": [],
+        "pricing_strategy": "",
+        "partnership_strategy": "",
+        "growth_strategy": ""
         }}
 
         Startup:
