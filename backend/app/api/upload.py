@@ -10,7 +10,7 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 @router.post("/upload")
 async def upload_file(file: UploadFile = File(...)):
-    
+
     file_path = os.path.join(
         UPLOAD_DIR,
         file.filename
@@ -20,6 +20,5 @@ async def upload_file(file: UploadFile = File(...)):
         buffer.write(await file.read())
 
     return {
-        "filename": file.filename,
-        "saved_to": file_path
+        "path": file_path
     }
