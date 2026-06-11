@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-
 from app.database.db import get_connection
+import json
 
 router = APIRouter()
 
@@ -12,6 +12,11 @@ def compare_reports(
 ):
 
     conn = get_connection()
+
+    conn.row_factory = lambda cursor, row: {
+        col[0]: row[idx]
+        for idx, col in enumerate(cursor.description)
+    }
 
     cursor = conn.cursor()
 
@@ -31,7 +36,17 @@ def compare_reports(
 
     conn.close()
 
+    if report1 and report1.get("report_json"):
+        report1["report_json"] = json.loads(
+            report1["report_json"]
+        )
+
+    if report2 and report2.get("report_json"):
+        report2["report_json"] = json.loads(
+            report2["report_json"]
+        )
+
     return {
-        "report1": dict(report1),
-        "report2": dict(report2)
+        "report1": report1,
+        "report2": report2
     }
