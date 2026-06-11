@@ -1,6 +1,26 @@
-node_modules
-.next
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Environment
 .env
-.env.local
-dist
-build
+
+# Database
+*.db
+*.sqlite
+
+# Uploads
+uploads/
+backend/uploads/
+
+# Next.js
+frontend/node_modules/
+frontend/.next/
+
+# Generated PDFs
+*.pdf
+
+# OS
+.DS_Store
+Thumbs.db
