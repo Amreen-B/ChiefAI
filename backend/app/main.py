@@ -5,6 +5,7 @@ from app.api.analyse import router as analyse_router
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.history import router as history_router
 from app.api.compare import router as compare_router
+from app.api.export import router as export_router
 
 
 load_dotenv()
@@ -27,6 +28,8 @@ app.include_router(upload_router)
 app.include_router(analyse_router)
 app.include_router(history_router)
 app.include_router(compare_router)
+app.include_router(export_router)
+
 
 @app.get("/")
 def root():

@@ -13,6 +13,8 @@ def init_database():
         id INTEGER PRIMARY KEY AUTOINCREMENT,
 
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                   
+        report_json TEXT,
 
         filename TEXT,
 
