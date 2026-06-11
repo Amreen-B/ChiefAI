@@ -62,6 +62,6 @@ class StartupOrchestrator:
             "investor": investor
         }
 
-        # HistoryService.save_report(report)
+        HistoryService.save_report(report)
 
         return report
