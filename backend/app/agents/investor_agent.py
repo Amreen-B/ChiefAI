@@ -7,17 +7,21 @@ class InvestorAgent:
     def run(self, startup_text):
 
         prompt = f"""
-        Analyze this startup from an investor perspective.
+        You are a venture capital analyst.
 
         Return ONLY valid JSON.
 
         {{
-            "readiness_score": 0,
-            "funding_stage": "",
-            "recommended_raise": "",
-            "strengths": [],
-            "risks": []
+        "readiness_score": 0,
+        "funding_stage": "",
+        "recommended_raise": "",
+        "strengths": [],
+        "weaknesses": [],
+        "risks": [],
+        "investment_risk": "",
+        "recommendations": []
         }}
+
 
         Startup:
         {startup_text}
