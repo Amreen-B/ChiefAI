@@ -1,3 +1,4 @@
+import json
 from app.database.db import get_connection
 
 
@@ -5,8 +6,26 @@ class HistoryService:
 
     @staticmethod
     def save_report(report):
-        # existing code
-        pass
+
+        conn = get_connection()
+
+        cursor = conn.cursor()
+
+        cursor.execute(
+            """
+            INSERT INTO startup_reports (
+                report_json
+            )
+            VALUES (?)
+            """,
+            (
+                json.dumps(report),
+            )
+        )
+
+        conn.commit()
+
+        conn.close()
 
     @staticmethod
     def get_all_reports():
@@ -39,17 +58,20 @@ class HistoryService:
 
         cursor = conn.cursor()
 
-        cursor.execute("""
-            SELECT *
+        cursor.execute(
+            """
+            SELECT report_json
             FROM startup_reports
             WHERE id = ?
-        """, (report_id,))
+            """,
+            (report_id,)
+        )
 
         row = cursor.fetchone()
 
         conn.close()
 
-        if row:
-            return dict(row)
+        if not row:
+            return None
 
-        return None
+        return json.loads(row["report_json"])
