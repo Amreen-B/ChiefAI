@@ -7,19 +7,32 @@ class MarketAgent:
     def run(self, startup_text):
 
         prompt = f"""
-        Analyze this startup.
+       You are a startup market analyst.
 
         Return ONLY valid JSON.
 
+        Do not add explanations.
+        Do not add markdown.
+        Do not add ```json.
+
+        Return exactly:
+
         {{
-            "market_size": "",
-            "growth_rate": "",
-            "tam": "",
-            "sam": "",
-            "som": "",
-            "competitors": [],
-            "market_trends": []
+        "market_size": "",
+        "growth_rate": "",
+        "tam": "",
+        "tam_explanation": "",
+        "sam": "",
+        "sam_explanation": "",
+        "som": "",
+        "som_explanation": "",
+        "competitors": [],
+        "market_trends": [],
+        "opportunities": [],
+        "risks": []
         }}
+
+        Market Trends should contain 3-5 short bullet point trends relevant to the startup's industry.
 
         Startup:
         {startup_text}
