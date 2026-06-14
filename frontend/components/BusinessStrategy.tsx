@@ -32,7 +32,6 @@ interface BusinessData {
   sales_strategy?: string;
   distribution_channels?: string[];
   partnership_strategy?: string;
-  partnerships?: string[];
 
   // Growth
   growth_roadmap?: string[];
@@ -48,27 +47,26 @@ interface BusinessData {
   ai_advantage?: string;
   technology_advantage?: string;
 
-  // SWOT
+  executive_summary?: string;
+}
+
+interface SwotData {
   strengths?: string[];
   weaknesses?: string[];
   opportunities?: string[];
   threats?: string[];
-
-  // AI Recommendations
-  recommendations?: string[];
-  business_risks?: string[];
-  suggested_improvements?: string[];
-  next_milestones?: string[];
-
-  // Scores
-  growth_readiness_score?: string | number;
-  business_health?: string;
-  executive_summary?: string;
 }
 
 interface Props {
   report: {
     business?: BusinessData;
+    investor?: {
+      recommendations?: string[];
+    };
+    swot?: SwotData;
+    executive_summary?: {
+      executive_summary?: string;
+    };
     metadata?: {
       generated_at?: string;
     };
@@ -85,14 +83,6 @@ function val(v: string | number | undefined, fallback = "Not available"): string
 
 function arr(v: string[] | undefined): string[] {
   return Array.isArray(v) ? v : [];
-}
-
-function scoreColor(score: string | number | undefined): string {
-  const n = parseFloat(String(score));
-  if (isNaN(n)) return "#0078D4";
-  if (n >= 75) return "#107C10";
-  if (n >= 50) return "#FF8C00";
-  return "#D13438";
 }
 
 // ── Reusable Components ───────────────────────────────────────────────────────
@@ -320,38 +310,17 @@ export default function BusinessStrategy({ report }: Props) {
   const revenueStreams              = arr(business.revenue_streams);
   const marketingChannels          = arr(business.marketing_channels);
   const distributionChannels       = arr(business.distribution_channels);
-  const partnerships               = arr(business.partnerships);
   const growthRoadmap              = arr(business.growth_roadmap);
   const keyAdvantages              = arr(business.key_advantages);
   const competitiveDifferentiators = arr(business.competitive_differentiators);
-  const strengths =
-    Array.isArray(business.strengths)
-      ? business.strengths
-      : [];
 
-  const weaknesses =
-    Array.isArray(business.weaknesses)
-      ? business.weaknesses
-      : [];
+  const swot = report.swot ?? {};
+  const strengths     = arr(swot.strengths);
+  const weaknesses    = arr(swot.weaknesses);
+  const opportunities = arr(swot.opportunities);
+  const threats       = arr(swot.threats);
 
-  const opportunities =
-    Array.isArray(business.opportunities)
-      ? business.opportunities
-      : [];
-
-  const threats =
-    Array.isArray(business.threats)
-      ? business.threats
-      : [];
-
-  const recommendations: string[] =
-    Array.isArray(business.recommendations)
-      ? business.recommendations
-      : [];
-
-  const businessRisks              = arr(business.business_risks);
-  const suggestedImprovements      = arr(business.suggested_improvements);
-  const nextMilestones             = arr(business.next_milestones);
+  const recommendations: string[] = arr(report.investor?.recommendations);
 
   const generatedAt = metadata.generated_at
     ? new Date(metadata.generated_at).toLocaleString("en-US", {
@@ -386,13 +355,13 @@ export default function BusinessStrategy({ report }: Props) {
       </div>
 
       {/* ── Executive Summary Banner ── */}
-      {business.executive_summary && (
+      {report.executive_summary?.executive_summary && (
         <div className="bg-[#E5F1FB] border-l-4 border-[#0078D4] p-5 rounded-xl">
           <h3 className="font-semibold text-[#0078D4] text-base flex items-center gap-2 mb-1">
             <span>🤖</span> Business Strategy Summary
           </h3>
           <p className="text-[#323130] text-sm leading-6">
-            {business.executive_summary}
+            {report.executive_summary.executive_summary}
           </p>
         </div>
       )}
@@ -421,10 +390,10 @@ export default function BusinessStrategy({ report }: Props) {
           accentColor="#8764B8"
         />
         <MetricCard
-          icon="🤝"
-          label="Partnerships"
-          value={String(partnerships.length || "N/A")}
-          sub="Strategic partners"
+          icon="📣"
+          label="Marketing Channels"
+          value={String(marketingChannels.length || "N/A")}
+          sub="Channels identified"
           accentColor="#F7630C"
         />
         <MetricCard
@@ -435,12 +404,11 @@ export default function BusinessStrategy({ report }: Props) {
           accentColor="#00B7C3"
         />
         <MetricCard
-          icon="📈"
-          label="Growth Score"
-          value={val(business.growth_readiness_score)}
-          sub="Readiness score"
-          accentColor={scoreColor(business.growth_readiness_score)}
-          scoreValue={business.growth_readiness_score}
+          icon="💪"
+          label="SWOT Strengths"
+          value={String(strengths.length || "N/A")}
+          sub="Identified by SWOT Agent"
+          accentColor="#107C10"
         />
       </div>
 
@@ -582,53 +550,18 @@ export default function BusinessStrategy({ report }: Props) {
 
       {/* ── AI Recommendations ── */}
       <SectionCard icon="🤖" title="AI Recommendations">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-          {recommendations.length > 0 && (
-            <div>
-              <p className="text-xs font-semibold text-[#0078D4] uppercase tracking-wide mb-3">Recommendations</p>
-              <ol className="space-y-2">
-                {recommendations.map((r, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-[#323130] leading-6 bg-[#F3F2F1] rounded-lg px-4 py-2">
-                    <span className="shrink-0 font-bold text-[#0078D4]">{i + 1}.</span>
-                    <span>{r}</span>
-                  </li>
-                ))}
-              </ol>
-            </div>
-          )}
-
-          {businessRisks.length > 0 && (
-            <div>
-              <p className="text-xs font-semibold text-[#D13438] uppercase tracking-wide mb-3">Business Risks</p>
-              <TagList items={businessRisks} emptyText="No risks identified." icon="🔴" colorClass="text-[#D13438]" />
-            </div>
-          )}
-
-          {suggestedImprovements.length > 0 && (
-            <div>
-              <p className="text-xs font-semibold text-[#107C10] uppercase tracking-wide mb-3">Suggested Improvements</p>
-              <TagList items={suggestedImprovements} emptyText="No suggestions." icon="✅" colorClass="text-[#107C10]" />
-            </div>
-          )}
-
-          {nextMilestones.length > 0 && (
-            <div>
-              <p className="text-xs font-semibold text-[#8764B8] uppercase tracking-wide mb-3">Next Milestones</p>
-              <TagList items={nextMilestones} emptyText="No milestones defined." icon="🎯" colorClass="text-[#8764B8]" />
-            </div>
-          )}
-
-          {recommendations.length === 0 &&
-           businessRisks.length === 0 &&
-           suggestedImprovements.length === 0 &&
-           nextMilestones.length === 0 && (
-            <div className="md:col-span-2">
-              <p className="text-sm text-[#605E5C]">No AI recommendations available.</p>
-            </div>
-          )}
-
-        </div>
+        {recommendations.length > 0 ? (
+          <ol className="space-y-2">
+            {recommendations.map((r, i) => (
+              <li key={i} className="flex items-start gap-2 text-sm text-[#323130] leading-6 bg-[#F3F2F1] rounded-lg px-4 py-2">
+                <span className="shrink-0 font-bold text-[#0078D4]">{i + 1}.</span>
+                <span>{r}</span>
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <p className="text-sm text-[#605E5C]">No AI recommendations available.</p>
+        )}
       </SectionCard>
 
       {/* ── Footer Branding ── */}
@@ -646,3 +579,4 @@ export default function BusinessStrategy({ report }: Props) {
     </div>
   );
 }
+
