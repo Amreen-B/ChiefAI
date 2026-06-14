@@ -5,12 +5,6 @@ interface Competitor {
   strength?: string;
 }
 
-interface AgentExecution {
-  agent: string;
-  status: string;
-  execution_time?: number;
-}
-
 interface MarketData {
   market_size?: string;
   growth_rate?: string;
@@ -25,19 +19,17 @@ interface InvestorData {
   funding_stage?: string;
   recommended_raise?: string;
   raise_amount?: string;
-  investment_outlook?: string;
+  investment_risk?: string;
+  recommendations?: string[];
 }
 
 interface ReportMetadata {
   generated_at?: string;
-  analysis_time?: string | number;
 }
 
 interface Report {
   market?: MarketData;
   investor?: InvestorData;
-
-  execution_log?: AgentExecution[];
 
   metadata?: ReportMetadata;
 
@@ -46,19 +38,20 @@ interface Report {
   analysis_summary?: {
     overall_score?: number;
     investment_outlook?: string;
-    agents_completed?: number;
-    total_agents?: number;
+    risk_level?: string;
   };
 
   executive_summary?: {
+    executive_summary?: string;
     ai_insight?: string;
+    business_model?: string;
+    target_customer?: string;
   };
 
   swot?: {
     strengths?: string[];
     weaknesses?: string[];
     opportunities?: string[];
-    risks?: string[];
     threats?: string[];
   };
 }
@@ -81,32 +74,6 @@ function scoreColor(score: string | number | undefined): string {
   if (n >= 75) return "#107C10";
   if (n >= 50) return "#FF8C00";
   return "#D13438";
-}
-
-function scoreBg(score: string | number | undefined): string {
-  const n = parseFloat(String(score));
-  if (isNaN(n)) return "#E5F1FB";
-  if (n >= 75) return "#DFF6DD";
-  if (n >= 50) return "#FFF4CE";
-  return "#FDE7E9";
-}
-
-function agentStatusColor(status: string): string {
-  if (status === "Completed") return "#107C10";
-  if (status === "Failed") return "#D13438";
-  return "#0078D4";
-}
-
-function agentStatusBg(status: string): string {
-  if (status === "Completed") return "#DFF6DD";
-  if (status === "Failed") return "#FDE7E9";
-  return "#E5F1FB";
-}
-
-function agentStatusIcon(status: string): string {
-  if (status === "Completed") return "✓";
-  if (status === "Failed") return "✕";
-  return "⟳";
 }
 
 // ── Sub-components ────────────────────────────────────────────────────────────
@@ -259,27 +226,20 @@ export default function Dashboard({ report }: Props) {
   const investor  = report.investor ?? {};
   const swot  = report.swot ?? {};
   const metadata  = report.metadata ?? {};
-  const agents: AgentExecution[] = Array.isArray(report.execution_log)? report.execution_log: [];
-  const recommendations: string[] = Array.isArray(report.recommendations) ? report.recommendations : [];
+  const recommendations: string[] = Array.isArray(investor.recommendations) ? investor.recommendations : [];
 
   const competitors = Array.isArray(market.competitors) ? market.competitors : [];
   const strengths = Array.isArray(swot.strengths) ? swot.strengths: [];
 
-  const risks = Array.isArray(swot.risks) ? swot.risks: [];  
+  const risks = Array.isArray(swot.threats) ? swot.threats: [];
 
   const opportunities = Array.isArray(swot.opportunities)? swot.opportunities: [];
 
-  const completedAgents = report.analysis_summary?.agents_completed ?? agents.filter(a => a.status === "Completed").length;
-  const totalAgents = report.analysis_summary?.total_agents ?? agents.length ?? 12;
-  const generatedAt = metadata.generated_at ?? "Not Available"
+  const generatedAt = metadata.generated_at
     ? new Date(metadata.generated_at).toLocaleString("en-US", {
         dateStyle: "medium",
         timeStyle: "short",
       })
-    : null;
-
-  const analysisTime = metadata.analysis_time
-    ? `${metadata.analysis_time}s`
     : null;
 
   return (
@@ -293,25 +253,17 @@ export default function Dashboard({ report }: Props) {
             AI-powered Startup Intelligence · Analyzed by{" "}
             <span className="font-medium text-[#0078D4]">12 Specialized AI Agents</span>
           </p>
-          <div className="flex flex-wrap gap-3 mt-2">
-            {generatedAt && (
+          {generatedAt && (
+            <div className="flex flex-wrap gap-3 mt-2">
               <span className="text-xs text-[#605E5C]">
                 🕐 Generated: {generatedAt}
               </span>
-            )}
-            {analysisTime && (
-              <span className="text-xs text-[#605E5C]">
-                ⚡ Analysis time: {analysisTime}
-              </span>
-            )}
-          </div>
+            </div>
+          )}
         </div>
         <div className="flex flex-col gap-2 items-start sm:items-end">
           <span className="bg-[#E5F1FB] text-[#0078D4] px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap">
             ✦ Powered by Microsoft Azure AI Foundry
-          </span>
-          <span className="bg-[#DFF6DD] text-[#107C10] px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap">
-            ✓ {completedAgents}/{totalAgents} Agents Completed
           </span>
         </div>
       </div>
@@ -348,10 +300,10 @@ export default function Dashboard({ report }: Props) {
         <KpiCard
           icon="💡"
           label="Investment Readiness"
-          value={val(investor.readiness_score)}
-          sub="Out of 100"
+          value={`${val(investor.readiness_score, "0")} / 10`}
+          sub="Investor Readiness Agent score"
           accentColor="#8764B8"
-          scoreValue={investor.readiness_score}
+          scoreValue={(parseFloat(String(investor.readiness_score)) || 0) * 10}
         />
 
         <KpiCard
@@ -372,12 +324,17 @@ export default function Dashboard({ report }: Props) {
         />
 
         <KpiCard
-          icon="🤖"
-          label="AI Confidence"
-          value={`${Math.round((completedAgents / totalAgents) * 100)}%`}
-          sub="Model confidence level"
-          accentColor="#0078D4"
-          scoreValue={Math.round((completedAgents / totalAgents) * 100)}
+          icon="⚠️"
+          label="Risk Level"
+          value={val(report.analysis_summary?.risk_level)}
+          sub="Overall investment risk"
+          accentColor={
+            (report.analysis_summary?.risk_level || "").toLowerCase().includes("low")
+              ? "#107C10"
+              : (report.analysis_summary?.risk_level || "").toLowerCase().includes("high")
+              ? "#D13438"
+              : "#FF8C00"
+          }
         />
 
         <KpiCard
@@ -407,14 +364,17 @@ export default function Dashboard({ report }: Props) {
         <div className="space-y-0">
           <OverviewRow
               label="Executive Summary"
-              value={report.executive_summary?.ai_insight || "No executive summary available."}
+              value={
+                report.executive_summary?.executive_summary ||
+                "No executive summary available."
+              }
           />
 
           <OverviewRow
               label="Business Model"
               value={
-                report.executive_summary?.executive_summary ||
-                "No executive summary available."
+                report.executive_summary?.business_model ||
+                "Not specified."
               }
           />
 
@@ -444,7 +404,7 @@ export default function Dashboard({ report }: Props) {
           />
           <OverviewRow
             label="Investment Readiness"
-            value={String(investor.readiness_score ?? 0)}
+            value={`${investor.readiness_score ?? 0} / 10`}
           />
           <OverviewRow
             label="Competitors"
@@ -568,9 +528,9 @@ export default function Dashboard({ report }: Props) {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
             { label: "Funding Stage", value: val(investor.funding_stage) },
-            { label: "Raise Amount", value: val(investor.raise_amount) },
-            { label: "Readiness Score", value: val(investor.readiness_score) },
-            { label: "Investment Outlook", value: val(investor.investment_outlook) },
+            { label: "Raise Amount", value: val(investor.recommended_raise ?? investor.raise_amount) },
+            { label: "Readiness Score", value: `${val(investor.readiness_score, "0")} / 10` },
+            { label: "Investment Outlook", value: val(report.analysis_summary?.investment_outlook) },
           ].map((item) => (
             <div
               key={item.label}
@@ -590,74 +550,21 @@ export default function Dashboard({ report }: Props) {
           <div className="mt-5">
             <div className="flex justify-between text-xs text-[#605E5C] mb-1">
               <span>Investment Readiness</span>
-              <span>{investor.readiness_score}/100</span>
+              <span>{investor.readiness_score}/10</span>
             </div>
             <div className="w-full bg-gray-100 rounded-full h-2">
               <div
                 className="h-2 rounded-full transition-all duration-700"
                 style={{
-                  width: `${Math.min(parseFloat(String(investor.readiness_score)) || 0, 10)}%`,
-                  backgroundColor: scoreColor(investor.readiness_score),
+                  width: `${Math.min((parseFloat(String(investor.readiness_score)) || 0) * 10, 100)}%`,
+                  backgroundColor: scoreColor((parseFloat(String(investor.readiness_score)) || 0) * 10),
                 }}
               />
             </div>
           </div>
+
         )}
       </SectionCard>
-
-      {/* ── Multi-Agent Execution ── */}
-      {agents.length > 0 && (
-        <SectionCard>
-          <SectionHeading
-            icon="⚙️"
-            title="Multi-Agent Execution"
-            badge={`${completedAgents}/${agents.length} Completed`}
-          />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {agents.map((agent, i) => (
-              <div
-                key={i}
-                className="flex items-center justify-between bg-[#F3F2F1] rounded-xl px-4 py-3 border border-gray-200"
-              >
-                <div className="flex items-center gap-2">
-                  <span
-                    className="w-6 h-6 rounded-full text-xs font-bold flex items-center justify-center shrink-0"
-                    style={{
-                      backgroundColor: agentStatusBg(agent.status),
-                      color: agentStatusColor(agent.status),
-                    }}
-                  >
-                    {agentStatusIcon(agent.status)}
-                  </span>
-                  <span className="text-sm font-medium text-[#323130]">
-                    {agent.agent}
-                  </span>
-                </div>
-                {agent.execution_time !== undefined && (
-                  <span className="text-xs text-[#605E5C] whitespace-nowrap ml-2">
-                    {agent.execution_time}s
-                  </span>
-                )}
-              </div>
-            ))}
-          </div>
-          {/* Execution Timeline Bar */}
-          <div className="mt-5">
-            <div className="flex justify-between text-xs text-[#605E5C] mb-1">
-              <span>Execution Progress</span>
-              <span>{Math.round((completedAgents / (agents.length || 1)) * 100)}%</span>
-            </div>
-            <div className="w-full bg-gray-100 rounded-full h-2">
-              <div
-                className="h-2 rounded-full bg-[#107C10] transition-all duration-700"
-                style={{
-                  width: `${Math.round((completedAgents / (agents.length || 1)) * 100)}%`,
-                }}
-              />
-            </div>
-          </div>
-        </SectionCard>
-      )}
 
       {/* ── Footer Branding ── */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2 border-t border-gray-200">
