@@ -19,15 +19,42 @@ export default function Topbar() {
 
       <div className="flex items-center">
 
-        {/* Microsoft Logo */}
+        {/* ChiefAI Logo — abstract multi-agent network mark */}
 
-        <div className="grid grid-cols-2 gap-[2px]">
+        <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
+          <svg
+            width="26"
+            height="26"
+            viewBox="0 0 32 32"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <linearGradient id="chiefaiGrad" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stopColor="#50E6FF" />
+                <stop offset="55%" stopColor="#0078D4" />
+                <stop offset="100%" stopColor="#8764B8" />
+              </linearGradient>
+            </defs>
 
-          <div className="w-4 h-4 bg-[#f25022]" />
-          <div className="w-4 h-4 bg-[#7fba00]" />
-          <div className="w-4 h-4 bg-[#00a4ef]" />
-          <div className="w-4 h-4 bg-[#ffb900]" />
+            {/* Connection lines between agent nodes */}
+            <path
+              d="M16 8 L8 22 M16 8 L24 22 M8 22 L24 22"
+              stroke="url(#chiefaiGrad)"
+              strokeWidth="2"
+              strokeLinecap="round"
+              opacity="0.55"
+            />
 
+            {/* Top node (orchestrator) */}
+            <circle cx="16" cy="8" r="4.5" fill="url(#chiefaiGrad)" />
+
+            {/* Bottom-left agent node */}
+            <circle cx="8" cy="22" r="3.5" fill="#FFFFFF" opacity="0.95" />
+
+            {/* Bottom-right agent node */}
+            <circle cx="24" cy="22" r="3.5" fill="#FFFFFF" opacity="0.95" />
+          </svg>
         </div>
 
         {/* Divider */}
