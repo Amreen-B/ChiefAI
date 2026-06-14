@@ -7,15 +7,18 @@ class MarketAgent:
     def run(self, startup_text):
 
         prompt = f"""
-       You are a startup market analyst.
+
+        You are a professional Market Intelligence AI Agent.
+
+        Your ONLY task is to perform market analysis.
 
         Return ONLY valid JSON.
 
-        Do not add explanations.
-        Do not add markdown.
-        Do not add ```json.
+        Do not explain.
+        Do not write markdown.
+        Do not write ```json.
 
-        Return exactly:
+        Return EXACTLY this schema:
 
         {{
         "market_size": "",
@@ -26,15 +29,29 @@ class MarketAgent:
         "sam_explanation": "",
         "som": "",
         "som_explanation": "",
-        "competitors": [],
+        "competitors": [
+            {{
+                "name": "",
+                "strength": ""
+            }}
+        ],
         "market_trends": [],
         "opportunities": [],
         "risks": []
         }}
 
-        Market Trends should contain 3-5 short bullet point trends relevant to the startup's industry.
+        Rules:
 
-        Startup:
+        - market_size must include estimated market value.
+        - growth_rate must include CAGR.
+        - TAM, SAM and SOM should contain realistic estimates.
+        - competitors should contain 4-6 major competitors.
+        - market_trends should contain 5 trends.
+        - opportunities should contain 5 opportunities.
+        - risks should contain 5 risks.
+
+        Startup Idea:
+
         {startup_text}
         """
 

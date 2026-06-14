@@ -1,4 +1,5 @@
 from app.services.llm_service import LLMService
+from app.services.json_parser import JsonParser
 
 
 class ExecutiveSummaryAgent:
@@ -6,23 +7,51 @@ class ExecutiveSummaryAgent:
     def run(self, startup_text):
 
         prompt = f"""
-        Create an executive summary.
+        You are an experienced startup advisor.
 
-        Startup:
+        Analyze the startup below.
+
+        Return ONLY valid JSON.
+
+        Generate ALL fields.
+
+        If information is missing,
+        infer a realistic answer.
+
+        Never return null.
+
+        {{
+            "executive_summary":"",
+            "ai_insight":"",
+            "business_model":"",
+            "target_customer":""
+        }}
+
+        Rules:
+
+        executive_summary:
+        - 40-50 words
+        - Mention startup, problem, solution, market and funding.
+
+        ai_insight:
+        - One actionable recommendation.
+        - Maximum 20 words.
+
+        business_model:
+        - One sentence.
+
+        target_customer:
+        - One sentence.
+
+        Startup Description:
 
         {startup_text}
-
-        Return:
-
-        - Startup Overview
-        - Problem
-        - Solution
-        - Market
-        - Business Model
-        - Growth Potential
-        - Investment Readiness
-
-        Keep it concise and professional.
         """
+        response = LLMService.ask(prompt)
+        response = JsonParser.parse(response)
 
-        return LLMService.ask(prompt)
+        print("\n========== EXECUTIVE SUMMARY AGENT ==========")
+        print(response)
+        print("=============================================\n")
+
+        return response

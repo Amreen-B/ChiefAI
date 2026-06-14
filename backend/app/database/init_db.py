@@ -44,6 +44,11 @@ def init_database():
 
     conn.close()
 
+print("=" * 60)
+print("ChiefAI Startup Intelligence Platform")
+print("Database initialized successfully")
+print("=" * 60)
+
 
 if __name__ == "__main__":
     init_database()

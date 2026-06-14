@@ -3,46 +3,45 @@ import re
 
 
 class JsonParser:
-
     @staticmethod
     def parse(response):
+
+        if not response:
+            return {}
 
         try:
             return json.loads(response)
 
         except Exception:
+            pass
 
-            try:
+        cleaned = response.strip()
 
-                cleaned = response.strip()
+        cleaned = cleaned.replace("```json", "")
+        cleaned = cleaned.replace("```", "")
+        cleaned = cleaned.replace("\u201c", "\"")
+        cleaned = cleaned.replace("\u201d", "\"")
+        cleaned = cleaned.replace("\u2018", "'")
+        cleaned = cleaned.replace("\u2019", "'")
 
-                cleaned = cleaned.replace(
-                    "```json",
-                    ""
-                )
+        match = re.search(r"\{[\s\S]*\}", cleaned)
 
-                cleaned = cleaned.replace(
-                    "```",
-                    ""
-                )
+        if not match:
+            print("JSON Parse Error: No JSON object found.")
+            return {}
 
-                match = re.search(
-                    r"\{.*\}",
-                    cleaned,
-                    re.DOTALL
-                )
+        json_text = match.group()
 
-                if match:
+        try:
+            return json.loads(json_text)
 
-                    return json.loads(
-                        match.group()
-                    )
+        except Exception as e:
+            print("JSON Parse Error:")
+            print(e)
+            print("\nRaw JSON:\n")
+            print(json_text)
 
-            except Exception as e:
-
-                print(
-                    "JSON Parse Error:",
-                    e
-                )
-
+            print("\n========== JSON ERROR ==========")
+            print(response)
+            print("================================")
             return {}

@@ -9,6 +9,12 @@ class InvestorAgent:
         prompt = f"""
         You are a venture capital analyst.
 
+        If startup doesn't specify,
+
+        estimate a realistic funding amount.
+
+        Never leave blank.
+
         Return ONLY valid JSON.
 
         {{

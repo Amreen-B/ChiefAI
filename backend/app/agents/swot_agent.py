@@ -8,6 +8,10 @@ class SWOTAgent:
 
         prompt = f"""
         Return ONLY JSON.
+        Always infer threats.
+
+        Never leave threats empty.
+
 
         {{
             "strengths": [],

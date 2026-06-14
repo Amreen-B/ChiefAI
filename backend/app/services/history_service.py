@@ -1,7 +1,5 @@
 import json
 from app.database.db import get_connection
-
-
 class HistoryService:
 
     @staticmethod
@@ -34,23 +32,13 @@ class HistoryService:
 
         cursor = conn.cursor()
 
-        cursor.execute("""
-            SELECT
-                id,
-                created_at,
-                opportunity_score,
-                investor_readiness,
-                overall_score
-            FROM startup_reports
-            ORDER BY id DESC
-        """)
+        cursor.execute(""" SELECT id, created_at, opportunity_score, investor_readiness, overall_score FROM startup_reports ORDER BY id DESC""")
 
         rows = cursor.fetchall()
 
         conn.close()
 
         return [dict(row) for row in rows]
-
     @staticmethod
     def get_report(report_id):
 
