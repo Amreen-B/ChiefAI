@@ -200,7 +200,7 @@ ChiefAI/
 ## Clone Repository
 
 ```bash
-git clone https://github.com/<your-username>/ChiefAI.git
+git clone https://github.com/Amreen-B/ChiefAI.git
 cd ChiefAI
 ```
 
@@ -305,6 +305,6 @@ This project is licensed under the MIT License.
 
 # 👨‍💻 Author
 
-**Amreen Bashir**
+**Amreen**
 
-Built with ❤️ using Microsoft Azure AI Foundry.
+Built with 🧠 using Microsoft Azure AI Foundry.
