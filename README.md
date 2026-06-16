@@ -19,7 +19,7 @@
 # Platform Preview
 
 <p align="center">
-<img src="assets/27.png" width="100%">
+<img src="Assets/27.png" width="100%">
 </p>
 
 ---
@@ -85,15 +85,15 @@ ChiefAI is a **Multi-Agent Startup Intelligence Platform** capable of:
 
 | Dashboard | Market Analysis |
 |------------|-----------------|
-| ![](assets/27.png) | ![](assets/20.png) |
+| ![](Assets/27.png) | ![](Assets/20.png) |
 
 | Business Strategy | Investor Readiness |
 |-------------------|--------------------|
-| ![](assets/19.png) | ![](assets/10.png) |
+| ![](Assets/19.png) | ![](Assets/10.png) |
 
 | Compare Startups | Report History |
 |------------------|----------------|
-| ![](assets/6.png) | ![](assets/7.png) |
+| ![](Assets/6.png) | ![](Assets/7.png) |
 
 ---
 
