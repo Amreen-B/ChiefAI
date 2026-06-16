@@ -473,15 +473,9 @@ The project demonstrates how multiple AI agents can collaborate through orchestr
 
 ---
 
-# Author
-
-**Amreen Begum**
-
-Built with ❤️ using Microsoft Azure AI Foundry and Azure OpenAI.
-
 # 🏆 Microsoft Agents League Hackathon
 
-ChiefAI was developed as a submission for the **Microsoft Agents League Hackathon**, demonstrating how autonomous AI agents can collaborate to solve complex startup evaluation tasks.
+ChiefAI was developed as a submission for the **Microsoft AI Agents League Hackathon**, demonstrating how autonomous AI agents can collaborate to solve complex startup evaluation tasks.
 
 ---
 
@@ -493,6 +487,6 @@ This project is licensed under the MIT License.
 
 # 👨‍💻 Author
 
-**Amreen**
+**Amreen Begum**
 
-Built with 🧠 using Microsoft Azure AI Foundry.
+Built with 🧠 using Microsoft Azure AI Foundry and Azure OpenAI.
