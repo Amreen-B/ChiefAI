@@ -11,7 +11,7 @@ from app.api.export import router as export_router
 load_dotenv()
 
 app = FastAPI(
-    title="AgentBoard AI"
+    title="ChiefAI"
 )
 app.add_middleware(
     CORSMiddleware,
