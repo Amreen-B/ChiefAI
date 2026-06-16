@@ -1,141 +1,325 @@
 # 🚀 ChiefAI – Multi-Agent Startup Intelligence Platform
 
-> **Transform startup ideas into investor-ready intelligence using autonomous AI agents.**
+<p align="center">
 
-ChiefAI is an AI-powered startup intelligence platform built for the **Microsoft Agents League Hackathon**. It leverages **12 specialized AI agents** working collaboratively to analyze startup ideas, generate business insights, assess investment readiness, evaluate market opportunities, identify risks, and produce comprehensive startup reports.
+![Python](https://img.shields.io/badge/Python-3.11-blue?style=for-the-badge&logo=python)
+![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688?style=for-the-badge&logo=fastapi)
+![NextJS](https://img.shields.io/badge/Next.js-Frontend-black?style=for-the-badge&logo=nextdotjs)
+![Azure AI](https://img.shields.io/badge/Azure%20AI-Foundry-0078D4?style=for-the-badge&logo=microsoftazure)
+![GPT](https://img.shields.io/badge/Azure%20OpenAI-GPT--4.1-412991?style=for-the-badge)
 
-Powered by **Microsoft Azure AI Foundry** and **Azure OpenAI**, ChiefAI acts as an intelligent co-founder for entrepreneurs, founders, incubators, and investors.
+</p>
 
----
-
-## 🌟 Features
-
-- 🤖 12 Specialized AI Agents
-- 📊 Market Analysis
-- 💼 Business Strategy Generation
-- 💰 Investor Readiness Assessment
-- ⚠️ Risk Analysis
-- 🏢 Competitor Analysis
-- 📈 Growth Strategy Recommendations
-- 📋 Executive Summary Generation
-- 🎯 SWOT Analysis
-- 📑 Presentation Generation
-- 📚 Research Insights
-- 🔄 Multi-Agent Orchestration
-- 📂 PDF Startup Proposal Analysis
-- 📈 Interactive Dashboard
-- 📜 Report History
-- 📤 Export Startup Reports
+<p align="center">
+<b>An AI-powered Multi-Agent platform that transforms startup ideas into investor-ready business intelligence.</b>
+</p>
 
 ---
 
-# 🧠 Multi-Agent Architecture
+# Platform Preview
 
-ChiefAI uses a collaborative multi-agent architecture where each AI agent specializes in one aspect of startup evaluation.
+<p align="center">
+<img src="assets/27.png" width="100%">
+</p>
+
+---
+
+# The Problem
+
+Every day, thousands of startup founders prepare pitch decks and business proposals.
+
+Before approaching investors, they need answers to questions like:
+
+- Is there a real market opportunity?
+- Is the business model sustainable?
+- Who are the competitors?
+- How investment-ready is the startup?
+- What are the biggest risks?
+- What funding should be raised?
+- How can the startup improve?
+
+Finding these answers usually requires multiple experts including:
+
+- Business Consultants
+- Market Analysts
+- Investors
+- Financial Advisors
+- Startup Mentors
+
+This process is expensive, time-consuming, and often inaccessible to early-stage founders.
+
+---
+
+# Our Solution
+
+ChiefAI acts as an **AI-powered startup advisory board**.
+
+Instead of relying on a single AI response, ChiefAI uses **multiple specialized AI agents**, where each agent independently analyzes one aspect of the startup.
+
+The agents collaborate through an orchestrator to generate a single comprehensive startup intelligence report.
+
+The result is a platform that helps founders make informed business decisions before approaching investors.
+
+---
+
+# What We Built
+
+ChiefAI is a **Multi-Agent Startup Intelligence Platform** capable of:
+
+- 📄 Analyzing startup proposal PDFs
+- 🤖 Running multiple AI agents simultaneously
+- 📈 Evaluating market opportunity
+- 💼 Generating business strategy
+- 💰 Assessing investment readiness
+- ⚠ Identifying startup risks
+- 📊 Producing SWOT analysis
+- 🧠 Creating executive summaries
+- 🚀 Recommending growth opportunities
+- 📑 Exporting investor-ready reports
+- 📚 Maintaining report history
+- 🔄 Comparing different startups or different versions of the same startup over time
+
+---
+
+# Platform Overview
+
+| Dashboard | Market Analysis |
+|------------|-----------------|
+| ![](assets/27.png) | ![](assets/20.png) |
+
+| Business Strategy | Investor Readiness |
+|-------------------|--------------------|
+| ![](assets/19.png) | ![](assets/10.png) |
+
+| Compare Startups | Report History |
+|------------------|----------------|
+| ![](assets/6.png) | ![](assets/7.png) |
+
+---
+
+# Multi-Agent Architecture
 
 ```
-                  Startup Proposal
-                         │
-                         ▼
-             Startup Orchestrator
-                         │
- ┌────────────────────────────────────────────┐
- │                                            │
- ▼                                            ▼
-Market Agent                         Business Agent
-Research Agent                       Investor Agent
-Competitor Agent                     SWOT Agent
-Risk Agent                           Strategy Agent
-Funding Agent                        Presentation Agent
-Execution Agent                      Executive Summary Agent
- │
- ▼
- Unified Startup Intelligence Report
-```
+                     Startup Proposal (PDF)
+                              │
+                              ▼
+                     PDF Processing Service
+                              │
+                              ▼
+                  Startup Orchestrator Agent
+                              │
+     ───────────────────────────────────────────────────
 
-Each agent independently analyzes the startup before the orchestrator combines their outputs into a single comprehensive report.
+        │         │          │         │         │
+
+        ▼         ▼          ▼         ▼         ▼
+
+ Market Agent  Business   Investor   Strategy   Risk
+               Agent      Agent      Agent      Agent
+
+        │         │          │         │         │
+
+        ▼         ▼          ▼         ▼         ▼
+
+ SWOT Agent  Research  Executive  Funding  Presentation
+             Agent      Summary    Agent       Agent
+
+                    │
+                    ▼
+
+        Unified Startup Intelligence Report
+
+                    │
+
+                    ▼
+
+        Interactive Dashboard + PDF Export
+```
 
 ---
 
-# 🤖 AI Agents
+# AI Agents
+
+ChiefAI consists of **12 autonomous AI agents**, each responsible for a specific business domain.
 
 | Agent | Responsibility |
-|-------|----------------|
-| 📈 Market Agent | Market size, TAM, SAM, SOM, trends |
-| 💼 Business Agent | Business model, customer segments, revenue streams |
+|--------|----------------|
+| 📈 Market Agent | Market size, industry trends, TAM, SAM, SOM |
+| 💼 Business Agent | Business model, revenue streams, pricing |
 | 💰 Investor Agent | Funding readiness and investment scoring |
-| ⚠️ Risk Agent | Startup risks and mitigation analysis |
+| ⚠ Risk Agent | Startup risks and mitigation strategies |
 | 🏢 Competitor Agent | Competitor discovery and benchmarking |
 | 📊 SWOT Agent | Strengths, Weaknesses, Opportunities, Threats |
 | 🚀 Strategy Agent | Growth roadmap and scaling strategy |
-| 📚 Research Agent | Industry research and insights |
+| 📚 Research Agent | Industry insights and recommendations |
 | 📝 Executive Summary Agent | Executive summary and AI recommendations |
-| 💵 Funding Agent | Funding recommendations and valuation |
-| 🎨 Presentation Agent | Investor pitch content generation |
-| ⚙️ Execution Agent | Startup execution roadmap |
+| 💵 Funding Agent | Funding recommendation |
+| 🎨 Presentation Agent | Investor pitch generation |
+| ⚙ Execution Agent | Startup execution roadmap |
 
 ---
 
-# 📷 Platform Modules
+# System Workflow
 
-## Dashboard
+```
+Upload Startup Proposal
 
-- Startup Overview
-- AI Insights
+        │
+
+        ▼
+
+Extract Startup Information
+
+        │
+
+        ▼
+
+Launch AI Agents in Parallel
+
+        │
+
+        ▼
+
+Individual Analysis
+
+        │
+
+        ▼
+
+Agent Orchestrator
+
+        │
+
+        ▼
+
+Unified Startup Intelligence Report
+
+        │
+
+        ▼
+
+Interactive Dashboard
+
+        │
+
+        ▼
+
+PDF Export & Report History
+```
+
+---
+
+# Key Features
+
+### Dashboard
+
 - Executive Summary
-- Market Metrics
 - Startup Health Score
-- Investment Readiness
-- Multi-Agent Execution Status
+- AI Insights
+- Funding Recommendation
+- Startup Metrics
 
 ---
 
-## Market Analysis
+### Market Analysis
 
 - Market Size
-- CAGR
-- TAM / SAM / SOM
-- Industry Trends
-- Customer Insights
-- Competitor Landscape
+- Industry Growth
+- TAM
+- SAM
+- SOM
+- Market Trends
 
 ---
 
-## Business Strategy
+### Business Strategy
 
 - Business Model
-- Value Proposition
+- Customer Segments
 - Revenue Streams
 - Pricing Strategy
-- Customer Segments
-- Growth Strategy
-- SWOT Snapshot
+- Value Proposition
 
 ---
 
-## Investor Readiness
+### Investor Readiness
 
-- Readiness Score
+- Investment Score
 - Funding Recommendation
-- Investment Outlook
-- Risk Assessment
-- Due Diligence Metrics
+- Startup Health
+- Growth Potential
+- Risk Evaluation
 
 ---
 
-## Compare Startups
+### Compare Startups
 
-Compare multiple startup analyses side-by-side.
+ChiefAI can compare:
+
+- Two different startups
+- The same startup across different timelines
+
+allowing founders to measure progress over time.
 
 ---
 
-## Report History
+### Report History
 
-Every startup analysis is automatically saved for future viewing.
+Every startup analysis is automatically stored, making previous reports easily accessible.
 
 ---
 
-# 🛠 Tech Stack
+### Export Reports
+
+Generate downloadable PDF reports for founders, mentors, accelerators, or investors.
+
+---
+
+# Project Structure
+
+```
+ChiefAI
+│
+├── assets/
+│   ├── platform screenshots
+│   └── architecture diagrams
+│
+├── backend/
+│   ├── app/
+│   │
+│   ├── agents/
+│   │     Individual AI agents
+│   │
+│   ├── services/
+│   │     Azure AI, PDF, JSON and utility services
+│   │
+│   ├── api/
+│   │     FastAPI endpoints
+│   │
+│   ├── orchestrator.py
+│   │     Coordinates all AI agents
+│   │
+│   └── main.py
+│         FastAPI application
+│
+├── frontend/
+│   ├── app/
+│   ├── components/
+│   ├── services/
+│   └── styles/
+│
+├── architecture/
+│
+├── demo/
+│
+├── docs/
+│
+└── README.md
+```
+
+---
+
+# Technology Stack
 
 ### Frontend
 
@@ -147,98 +331,63 @@ Every startup analysis is automatically saved for future viewing.
 ### Backend
 
 - FastAPI
-- Python
+- Python 3.11
 
 ### AI
 
-- Microsoft Azure AI Foundry
-- Azure OpenAI
-- GPT-4.1
+- Azure AI Foundry
+- Azure OpenAI GPT-4.1
 
 ### Database
 
-- JSON-based report storage
+- SQLite
 
-### Other
+### Report Generation
 
-- REST APIs
-- Concurrent Agent Execution
-- Multi-threading
-
----
-
-# 📁 Project Structure
-
-```
-ChiefAI/
-│
-├── backend/
-│   ├── app/
-│   │   ├── agents/
-│   │   ├── api/
-│   │   ├── services/
-│   │   ├── orchestrator.py
-│   │   └── main.py
-│   │
-│   └── requirements.txt
-│
-├── frontend/
-│   ├── app/
-│   ├── components/
-│   ├── services/
-│   └── public/
-│
-├── docs/
-├── demo/
-└── README.md
-```
+- ReportLab
+- PDF Processing
 
 ---
 
-# ⚙️ Installation
+# Getting Started
 
 ## Clone Repository
 
 ```bash
 git clone https://github.com/Amreen-B/ChiefAI.git
+
 cd ChiefAI
 ```
 
 ---
 
-## Backend Setup
+## Backend
 
 ```bash
 cd backend
 
 python -m venv venv
 
-# Windows
 venv\Scripts\activate
 
-# macOS/Linux
-source venv/bin/activate
-
 pip install -r requirements.txt
-```
 
-Create a `.env` file:
-
-```
-AZURE_AI_KEY=your_key
-AZURE_AI_ENDPOINT=your_endpoint
-AZURE_DEPLOYMENT_NAME=your_deployment
-```
-
-Run backend:
-
-```bash
 uvicorn app.main:app --reload
+```
+
+Create a `.env` file
+
+```
+AZURE_AI_ENDPOINT=
+
+AZURE_AI_KEY=
+
+AZURE_DEPLOYMENT_NAME=
 ```
 
 ---
 
-## Frontend Setup
+## Frontend
 
 ```bash
 cd frontend
@@ -248,7 +397,7 @@ npm install
 npm run dev
 ```
 
-Open:
+Visit
 
 ```
 http://localhost:3000
@@ -256,40 +405,79 @@ http://localhost:3000
 
 ---
 
-# 🚀 Workflow
+# Future Improvements
 
-1. Upload a startup proposal (PDF)
-2. ChiefAI extracts startup information
-3. 12 AI agents analyze the startup concurrently
-4. The orchestrator aggregates all results
-5. A comprehensive startup intelligence report is generated
-6. Reports are saved for future reference
+- Multi-language startup analysis
+- Live market intelligence APIs
+- Team collaboration
+- AI pitch deck generation
+- Financial forecasting
+- Founder recommendation engine
+- Azure cloud deployment
+- Agent memory for iterative startup improvements
 
 ---
 
-# 🎯 Use Cases
+# Why Multi-Agent?
+
+Instead of asking one LLM to perform every task, ChiefAI distributes responsibilities among specialized AI agents.
+
+This architecture provides:
+
+- Better modularity
+- Easier scalability
+- Improved reasoning
+- Parallel execution
+- More reliable outputs
+- Separation of responsibilities
+
+---
+
+# Built For
 
 - Startup Founders
 - Entrepreneurs
 - Incubators
 - Accelerators
+- Investors
 - Venture Capital Firms
-- Angel Investors
 - University Innovation Labs
-- Startup Competitions
 
 ---
 
-# 🌐 Powered By
+# Demo
 
-- Microsoft Azure AI Foundry
-- Azure OpenAI Service
-- FastAPI
-- Next.js
-- TypeScript
-- Python
+Demo video:
+
+```
+demo/demo.mp4
+```
 
 ---
+
+# Documentation
+
+Project documentation is available inside:
+
+```
+docs/
+```
+
+---
+
+# Microsoft Agents League Hackathon
+
+ChiefAI was built as a submission for the **Microsoft Agents League Hackathon**.
+
+The project demonstrates how multiple AI agents can collaborate through orchestration to solve a complex real-world business problem—transforming startup proposals into structured, actionable, investor-ready intelligence.
+
+---
+
+# Author
+
+**Amreen Begum**
+
+Built with ❤️ using Microsoft Azure AI Foundry and Azure OpenAI.
 
 # 🏆 Microsoft Agents League Hackathon
 
